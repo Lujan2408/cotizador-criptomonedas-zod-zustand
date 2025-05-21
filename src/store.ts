@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import {devtools} from "zustand/middleware"
 import axios from "axios";
 import { cryptoCurrenciesResponseSchema } from "./schema/crypto-schema";
 import { cryptoCurrency } from "./types";
@@ -17,7 +18,7 @@ async function getCryptos () {
   }
 } 
 
-export const useCryptoStore = create<CryptoStore>((set) => ({
+export const useCryptoStore = create<CryptoStore>()(devtools((set) => ({
   cryptoCurrencies: [], // State
 
   fetchCryptos: async () => { // Mandamos a llamar la función cuando la app esté lista
@@ -26,4 +27,4 @@ export const useCryptoStore = create<CryptoStore>((set) => ({
       cryptoCurrencies
     }))
   }
-}))
+})))
