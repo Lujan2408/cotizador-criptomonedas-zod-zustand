@@ -12,5 +12,9 @@ export async function getCryptos () {
 } 
 
 export async function fetchCurrentCryptoPrice (pair: pair) {
-  console.log(pair)
+  const URL = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${pair.criptoCurrency}&tsyms=${pair.currency}`
+  const {data: { DISPLAY } } = await axios(URL)
+  // Accede dinámicamente al objeto DISPLAY usando el nombre de la criptomoneda y la moneda destino,
+  // y muestra los datos formateados del precio actual (por ejemplo, DISPLAY["BTC"]["USD"])
+  console.log(DISPLAY[pair.criptoCurrency][pair.currency])
 }
