@@ -1,10 +1,13 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import CriptoSearchForm from "./components/CriptoSearchForm"
 import { useCryptoStore } from "./store"
+import CryptoPriceDisplay from "./components/CryptoPriceDisplay"
 
 function App() {
 
   const fetchCryptos = useCryptoStore((state) => state.fetchCryptos)
+  const result = useCryptoStore((state) => state.result)
+  const hasResult = useMemo(() => Object.keys(result).length > 0,[result])
 
   useEffect(() => {
     fetchCryptos()
@@ -18,11 +21,14 @@ function App() {
         </h1>
 
         <div className="content">
-          <CriptoSearchForm/>
+          <CriptoSearchForm />
+          {hasResult && 
+            <CryptoPriceDisplay 
+          />}
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default App

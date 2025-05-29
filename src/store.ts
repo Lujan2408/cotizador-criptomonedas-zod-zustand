@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { z } from "zod" 
 import {devtools} from "zustand/middleware"
 import { cryptoCurrency, cryptoPrice, pair } from "./types";
 import { getCryptos, fetchCurrentCryptoPrice } from "./services/CryptoService";
@@ -15,14 +14,7 @@ type CryptoStore = {
 export const useCryptoStore = create<CryptoStore>()(devtools((set) => ({
     // State
     cryptoCurrencies: [],
-    result: {
-      IMAGEURL: z.string(),
-      PRICE: z.string(),
-      HIGHDAY: z.string(),
-      LOWDAY: z.string(),
-      CHANGEPCT24HOUR: z.string(),
-      LASTUPDATE: z.string(),
-    },
+    result: {} as cryptoPrice,
 
     fetchCryptos: async () => {
       // Mandamos a llamar la función cuando la app esté lista
@@ -35,8 +27,8 @@ export const useCryptoStore = create<CryptoStore>()(devtools((set) => ({
       const result = await fetchCurrentCryptoPrice(pair);
 
       set(() => ({
-        result
-      }))
+        result,
+      }));
     },
   }))
 );
